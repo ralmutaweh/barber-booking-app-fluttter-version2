@@ -1,7 +1,9 @@
 import 'package:barber_booking_app/pages/home.dart';
 import 'package:barber_booking_app/pages/login.dart';
+import 'package:barber_booking_app/services/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -28,6 +30,15 @@ class _SignupState extends State<Signup> {
               email: userEmail!,
               password: userPassword!,
             );
+        // Store user data in Firestore
+        String id = randomAlphaNumeric(10);
+        Map<String, dynamic> userDataMap = {
+          "Name": nameController.text,
+          "Email": emailController.text,
+          "Id": id,
+        };
+        await DatabaseMethods().addUserDetails(userDataMap, id);
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
