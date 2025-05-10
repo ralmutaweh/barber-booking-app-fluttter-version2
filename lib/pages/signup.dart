@@ -1,9 +1,11 @@
 import 'package:barber_booking_app/pages/home.dart';
 import 'package:barber_booking_app/pages/login.dart';
 import 'package:barber_booking_app/services/database.dart';
+import 'package:barber_booking_app/services/shared_prefrerences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Signup extends StatefulWidget {
   const Signup({super.key});
@@ -32,6 +34,11 @@ class _SignupState extends State<Signup> {
             );
         // Store user data in Firestore
         String id = randomAlphaNumeric(10);
+
+        await SharedPrefrerencesHelper().saveUserName(nameController.text);
+        await SharedPrefrerencesHelper().saveUserEmail(emailController.text);
+        await SharedPrefrerencesHelper().saveUserId(id);
+
         Map<String, dynamic> userDataMap = {
           "Name": nameController.text,
           "Email": emailController.text,
