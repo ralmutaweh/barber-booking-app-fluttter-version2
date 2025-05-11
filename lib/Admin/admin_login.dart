@@ -51,6 +51,7 @@ class _AdminLoginState extends State<AdminLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF2b1615),
       body: Container(
         child: Stack(
           //Stack widget to overflow

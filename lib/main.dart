@@ -1,4 +1,5 @@
 import 'package:barber_booking_app/Admin/admin_login.dart';
+import 'package:barber_booking_app/Admin/booking_admin.dart';
 import 'package:barber_booking_app/pages/booking.dart';
 import 'package:barber_booking_app/pages/home.dart';
 import 'package:barber_booking_app/pages/login.dart';

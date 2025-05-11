@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 
 class DatabaseMethods {
   Future addUserDetails(Map<String, dynamic> userData, String id) async {
@@ -10,5 +11,16 @@ class DatabaseMethods {
 
   Future addUserBooking(Map<String, dynamic> userData) async {
     return await FirebaseFirestore.instance.collection("Booking").add(userData);
+  }
+
+  RemoveUserBooking(String id) async {
+    return await FirebaseFirestore.instance
+        .collection("Booking")
+        .doc(id)
+        .delete();
+  }
+
+  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getBookings() async {
+    return await FirebaseFirestore.instance.collection("Booking").snapshots();
   }
 }
