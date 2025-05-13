@@ -1,4 +1,4 @@
-import 'package:barber_booking_app/widgets/reusable_widgets.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:flutter/material.dart';
 
 class Onboarding extends StatefulWidget {

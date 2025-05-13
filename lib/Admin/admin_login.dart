@@ -1,5 +1,6 @@
 import 'package:barber_booking_app/Admin/booking_admin.dart';
-import 'package:barber_booking_app/widgets/reusable_widgets.dart';
+import 'package:barber_booking_app/Utility/CustomerSnackBar.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -21,22 +22,16 @@ class _AdminLoginState extends State<AdminLogin> {
       snapshot.docs.forEach((result) {
         if (result.data()['id'] != userNameController.text.trim()) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Your username is not correct. Please try again',
-                style: TextStyle(fontSize: 20),
-              ),
-              backgroundColor: Colors.red,
+            CustomSnackBar.create(
+              text: 'Username not found. Please try again',
+              isError: false,
             ),
           );
         } else if (result.data()['password'] != passwordController.text) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Your password is not correct. Please try again',
-                style: TextStyle(fontSize: 20),
-              ),
-              backgroundColor: Colors.red,
+            CustomSnackBar.create(
+              text: 'Password is incorrect. Please try again',
+              isError: false,
             ),
           );
         } else {

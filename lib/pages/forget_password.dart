@@ -1,5 +1,6 @@
+import 'package:barber_booking_app/Utility/CustomerSnackBar.dart';
 import 'package:barber_booking_app/services/database.dart';
-import 'package:barber_booking_app/widgets/reusable_widgets.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -21,23 +22,17 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email!);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Password reset email sent to $email',
-            style: const TextStyle(fontSize: 20),
-          ),
-          backgroundColor: Colors.green,
+        CustomSnackBar.create(
+          text: 'Password reset email sent to $email',
+          isError: false,
         ),
       );
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Not user was found for the email provided',
-              style: TextStyle(fontSize: 20),
-            ),
-            backgroundColor: Colors.green,
+          CustomSnackBar.create(
+            text: 'No user found for the email provided.',
+            isError: true,
           ),
         );
       }

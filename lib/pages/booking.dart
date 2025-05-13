@@ -1,6 +1,7 @@
+import 'package:barber_booking_app/Utility/CustomerSnackBar.dart';
 import 'package:barber_booking_app/services/database.dart';
 import 'package:barber_booking_app/services/shared_prefrerences.dart';
-import 'package:barber_booking_app/widgets/reusable_widgets.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:flutter/material.dart';
 
 class Booking extends StatefulWidget {
@@ -222,13 +223,9 @@ class _BookingState extends State<Booking> {
                     value,
                   ) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text(
-                          'Service has been booked successfully.',
-                          style: TextStyle(fontSize: 20),
-                        ),
-                        backgroundColor: Colors.greenAccent,
-                        duration: Duration(seconds: 2),
+                      CustomSnackBar.create(
+                        text: 'Service Booked Successfully',
+                        isError: false,
                       ),
                     );
                   });

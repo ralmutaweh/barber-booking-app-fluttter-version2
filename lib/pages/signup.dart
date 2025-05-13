@@ -1,8 +1,9 @@
+import 'package:barber_booking_app/Utility/CustomerSnackBar.dart';
 import 'package:barber_booking_app/pages/home.dart';
 import 'package:barber_booking_app/pages/login.dart';
 import 'package:barber_booking_app/services/database.dart';
 import 'package:barber_booking_app/services/shared_prefrerences.dart';
-import 'package:barber_booking_app/widgets/reusable_widgets.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
@@ -48,12 +49,9 @@ class _SignupState extends State<Signup> {
         await DatabaseMethods().addUserDetails(userDataMap, id);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Registered Successfully',
-              style: TextStyle(fontSize: 20),
-            ),
-            backgroundColor: Colors.green,
+          CustomSnackBar.create(
+            text: 'Registration Successful',
+            isError: false,
           ),
         );
         Navigator.push(
@@ -63,22 +61,16 @@ class _SignupState extends State<Signup> {
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'The password provided is too weak.',
-                style: TextStyle(fontSize: 20),
-              ),
-              backgroundColor: Colors.red,
+            CustomSnackBar.create(
+              text: 'Password provided is weak',
+              isError: true,
             ),
           );
         } else if (e.code == 'email-already-in-use') {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                'Account already exists for that email.',
-                style: TextStyle(fontSize: 20),
-              ),
-              backgroundColor: Colors.red,
+            CustomSnackBar.create(
+              text: 'Account already exists for that email',
+              isError: true,
             ),
           );
         }

@@ -1,6 +1,7 @@
+import 'package:barber_booking_app/Utility/CustomerSnackBar.dart';
 import 'package:barber_booking_app/pages/home.dart';
 import 'package:barber_booking_app/pages/signup.dart';
-import 'package:barber_booking_app/widgets/reusable_widgets.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -37,35 +38,23 @@ class _LoginState extends State<Login> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'No user found for that email.',
-              style: TextStyle(fontSize: 20),
-            ),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 2),
+          CustomSnackBar.create(
+            text: 'No user found for that email.',
+            isError: true,
           ),
         );
       } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Wrong password provided for that user.',
-              style: TextStyle(fontSize: 20),
-            ),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 2),
+          CustomSnackBar.create(
+            text: 'Wrong password provided for that user.',
+            isError: true,
           ),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Error occurred while signing in.',
-              style: TextStyle(fontSize: 20),
-            ),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 2),
+          CustomSnackBar.create(
+            text: 'An error occurred. Please try again.',
+            isError: true,
           ),
         );
       }
