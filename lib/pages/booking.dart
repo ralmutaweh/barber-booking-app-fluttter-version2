@@ -1,3 +1,5 @@
+import 'package:barber_booking_app/services/database.dart';
+import 'package:barber_booking_app/services/shared_prefrerences.dart';
 import 'package:flutter/material.dart';
 
 class Booking extends StatefulWidget {
@@ -10,6 +12,27 @@ class Booking extends StatefulWidget {
 }
 
 class _BookingState extends State<Booking> {
+  String? name, email;
+
+  getDataFromSharedPreferences() async {
+    name = await SharedPrefrerencesHelper().getUserName();
+    email = await SharedPrefrerencesHelper().getUserEmail();
+    setState(() {});
+  }
+
+  getOnTheLoad() async {
+    // When loading the application (init state)
+    await getDataFromSharedPreferences();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getOnTheLoad();
+    super.initState();
+  }
+
   DateTime _selectedDate = DateTime.now();
   TimeOfDay _selectedTime = TimeOfDay.now();
 
@@ -184,18 +207,44 @@ class _BookingState extends State<Booking> {
             ),
             SizedBox(height: 20),
             Center(
-              child: Container(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                decoration: BoxDecoration(
-                  color: Color(0xFFdf711a),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: Text(
-                  'Book Now',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
+              child: GestureDetector(
+                onTap: () async {
+                  Map<String, dynamic> userBookingMap = {
+                    "Service": widget.service,
+                    "Date":
+                        '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
+                    "Time": _selectedTime.format(context).toString(),
+                    "Username": name,
+                    "Email": email,
+                  };
+                  await DatabaseMethods().addUserBooking(userBookingMap).then((
+                    value,
+                  ) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(
+                          'Service has been booked successfully.',
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        backgroundColor: Colors.greenAccent,
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  });
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFdf711a),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Text(
+                    'Book Now',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

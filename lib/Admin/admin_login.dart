@@ -1,76 +1,57 @@
-import 'package:barber_booking_app/pages/home.dart';
-import 'package:barber_booking_app/pages/signup.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:barber_booking_app/Admin/booking_admin.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class AdminLogin extends StatefulWidget {
+  const AdminLogin({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<AdminLogin> createState() => _AdminLoginState();
 }
 
-class _LoginState extends State<Login> {
-  String? userEmail, userPassword;
-
-  TextEditingController emailController = TextEditingController();
+class _AdminLoginState extends State<AdminLogin> {
+  TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  final _formkey = GlobalKey<FormState>(); //Form key to validate the form
 
-  final _formkey =
-      GlobalKey<FormState>(); //Form key to validate the form (Error Handling)
-
-  userLogin() async {
-    try {
-      // Check the password passed is correct
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password:
-            passwordController
-                .text, //Consider using a trim method to remove any leading or trailing spaces
-      );
-      Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'No user found for that email.',
-              style: TextStyle(fontSize: 20),
+  LoginAdmin() {
+    FirebaseFirestore.instance.collection("Admin").get().then((snapshot) {
+      snapshot.docs.forEach((result) {
+        if (result.data()['id'] != userNameController.text.trim()) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Your username is not correct. Please try again',
+                style: TextStyle(fontSize: 20),
+              ),
+              backgroundColor: Colors.red,
             ),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 2),
-          ),
-        );
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Wrong password provided for that user.',
-              style: TextStyle(fontSize: 20),
+          );
+        } else if (result.data()['password'] != passwordController.text) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(
+                'Your password is not correct. Please try again',
+                style: TextStyle(fontSize: 20),
+              ),
+              backgroundColor: Colors.red,
             ),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 2),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Error occurred while signing in.',
-              style: TextStyle(fontSize: 20),
-            ),
-            backgroundColor: Colors.red,
-            duration: Duration(seconds: 2),
-          ),
-        );
-      }
-    }
+          );
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => BookingAdmin()),
+          );
+        }
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xFF2b1615),
       body: Container(
         child: Stack(
           //Stack widget to overflow
@@ -91,7 +72,7 @@ class _LoginState extends State<Login> {
                 ),
               ),
               child: Text(
-                'Welcome back,\n Sign In to Begin!',
+                'Admin\n Panel',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 30.0,
@@ -119,12 +100,12 @@ class _LoginState extends State<Login> {
                 ),
               ),
               child: Form(
-                key: _formkey,
+                key: _formkey, //Form key to validate the form (Error Handling)
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Email:',
+                      'Username:',
                       style: TextStyle(
                         color: Color(0xFFB91635),
                         fontSize: 25.0,
@@ -134,13 +115,13 @@ class _LoginState extends State<Login> {
                     TextFormField(
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return 'Please enter your email';
+                          return 'Please enter your username';
                         }
                         return null;
                       },
-                      controller: emailController,
+                      controller: userNameController,
                       decoration: InputDecoration(
-                        hintText: 'JohnDoe@mymail.com',
+                        hintText: 'Write your username',
                         prefixIcon: Icon(Icons.mail_outlined),
                       ),
                     ),
@@ -167,31 +148,9 @@ class _LoginState extends State<Login> {
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          'Forget Password',
-                          style: TextStyle(
-                            color: Color(0xFF621d3c),
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 40),
+                    SizedBox(height: 30),
                     GestureDetector(
-                      onTap: () {
-                        if (_formkey.currentState!.validate()) {
-                          setState(() {
-                            userEmail = emailController.text;
-                            userPassword = passwordController.text;
-                          });
-                          userLogin();
-                        }
-                      },
+                      onTap: () => {LoginAdmin()},
                       child: Container(
                         padding: EdgeInsets.symmetric(vertical: 10),
                         width: MediaQuery.of(context).size.width,
@@ -209,7 +168,7 @@ class _LoginState extends State<Login> {
                         ),
                         child: Center(
                           child: Text(
-                            'Sign In',
+                            'LOG IN',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 26.0,
@@ -218,29 +177,6 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(height: 5),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => Signup()),
-                            );
-                          },
-                          child: Text(
-                            'Don\'t have an account? \nSign Up',
-                            textAlign: TextAlign.end,
-                            style: TextStyle(
-                              color: Color(0xFF621d3c),
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),

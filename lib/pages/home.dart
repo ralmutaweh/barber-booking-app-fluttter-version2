@@ -1,4 +1,5 @@
 import 'package:barber_booking_app/pages/booking.dart';
+import 'package:barber_booking_app/services/shared_prefrerences.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -9,6 +10,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String? name;
+
+  getDataFromSharedPreferences() async {
+    name = await SharedPrefrerencesHelper().getUserName();
+    setState(() {});
+  }
+
+  getOnTheLoad() async {
+    // When loading the application (init state)
+    await getDataFromSharedPreferences();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    getOnTheLoad();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +59,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Text(
-                      'Test User',
+                      name!,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 24.0,
