@@ -1,4 +1,5 @@
 import 'package:barber_booking_app/Admin/booking_admin.dart';
+import 'package:barber_booking_app/widgets/reusable_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class _AdminLoginState extends State<AdminLogin> {
       snapshot.docs.forEach((result) {
         if (result.data()['id'] != userNameController.text.trim()) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text(
                 'Your username is not correct. Please try again',
                 style: TextStyle(fontSize: 20),
@@ -30,7 +31,7 @@ class _AdminLoginState extends State<AdminLogin> {
           );
         } else if (result.data()['password'] != passwordController.text) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text(
                 'Your password is not correct. Please try again',
                 style: TextStyle(fontSize: 20),
@@ -41,7 +42,7 @@ class _AdminLoginState extends State<AdminLogin> {
         } else {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => BookingAdmin()),
+            MaterialPageRoute(builder: (context) => const BookingAdmin()),
           );
         }
       });
@@ -51,16 +52,16 @@ class _AdminLoginState extends State<AdminLogin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF2b1615),
+      backgroundColor: const Color(0xFF2b1615),
       body: Container(
         child: Stack(
           //Stack widget to overflow
           children: [
             Container(
-              padding: EdgeInsets.only(top: 50, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     Color(0xFFB91635),
@@ -71,7 +72,7 @@ class _AdminLoginState extends State<AdminLogin> {
                   end: Alignment.bottomRight,
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'Admin\n Panel',
                 style: TextStyle(
                   color: Colors.white,
@@ -81,7 +82,7 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 40,
                 right: 30,
                 left: 30,
@@ -92,7 +93,7 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40),
@@ -104,7 +105,7 @@ class _AdminLoginState extends State<AdminLogin> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Username:',
                       style: TextStyle(
                         color: Color(0xFFB91635),
@@ -120,13 +121,13 @@ class _AdminLoginState extends State<AdminLogin> {
                         return null;
                       },
                       controller: userNameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Write your username',
                         prefixIcon: Icon(Icons.mail_outlined),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const CustomSizedBox(height: 20),
+                    const Text(
                       'Password:',
                       style: TextStyle(
                         color: Color(0xFFB91635),
@@ -142,20 +143,20 @@ class _AdminLoginState extends State<AdminLogin> {
                         return null;
                       },
                       controller: passwordController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Write a strong password',
                         prefixIcon: Icon(Icons.password),
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(height: 30),
+                    const CustomSizedBox(height: 30),
                     GestureDetector(
                       onTap: () => {LoginAdmin()},
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [
                               Color(0xFFB91635),
                               Color(0xFF621d3c),
@@ -166,7 +167,7 @@ class _AdminLoginState extends State<AdminLogin> {
                           ),
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'LOG IN',
                             style: TextStyle(

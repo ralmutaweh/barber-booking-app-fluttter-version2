@@ -2,6 +2,7 @@ import 'package:barber_booking_app/pages/home.dart';
 import 'package:barber_booking_app/pages/login.dart';
 import 'package:barber_booking_app/services/database.dart';
 import 'package:barber_booking_app/services/shared_prefrerences.dart';
+import 'package:barber_booking_app/widgets/reusable_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
@@ -47,7 +48,7 @@ class _SignupState extends State<Signup> {
         await DatabaseMethods().addUserDetails(userDataMap, id);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text(
               'Registered Successfully',
               style: TextStyle(fontSize: 20),
@@ -57,12 +58,12 @@ class _SignupState extends State<Signup> {
         );
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Home()),
+          MaterialPageRoute(builder: (context) => const Home()),
         );
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text(
                 'The password provided is too weak.',
                 style: TextStyle(fontSize: 20),
@@ -72,7 +73,7 @@ class _SignupState extends State<Signup> {
           );
         } else if (e.code == 'email-already-in-use') {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Text(
                 'Account already exists for that email.',
                 style: TextStyle(fontSize: 20),
@@ -93,10 +94,10 @@ class _SignupState extends State<Signup> {
           //Stack widget to overflow
           children: [
             Container(
-              padding: EdgeInsets.only(top: 50, left: 20, right: 20),
+              padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
               height: MediaQuery.of(context).size.height / 2,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
                     Color(0xFFB91635),
@@ -107,7 +108,7 @@ class _SignupState extends State<Signup> {
                   end: Alignment.bottomRight,
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'Welcome,\n Create your account!',
                 style: TextStyle(
                   color: Colors.white,
@@ -117,7 +118,7 @@ class _SignupState extends State<Signup> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(
+              padding: const EdgeInsets.only(
                 top: 40,
                 right: 30,
                 left: 30,
@@ -128,7 +129,7 @@ class _SignupState extends State<Signup> {
               ),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(40),
@@ -140,7 +141,7 @@ class _SignupState extends State<Signup> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Name:',
                       style: TextStyle(
                         color: Color(0xFFB91635),
@@ -156,13 +157,13 @@ class _SignupState extends State<Signup> {
                         return null;
                       },
                       controller: nameController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'John Doe',
                         prefixIcon: Icon(Icons.mail_outlined),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const CustomSizedBox(height: 20),
+                    const Text(
                       'Email:',
                       style: TextStyle(
                         color: Color(0xFFB91635),
@@ -178,13 +179,13 @@ class _SignupState extends State<Signup> {
                         return null;
                       },
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'JohnDoe@mymail.com',
                         prefixIcon: Icon(Icons.mail_outlined),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const CustomSizedBox(height: 20),
+                    const Text(
                       'Password:',
                       style: TextStyle(
                         color: Color(0xFFB91635),
@@ -200,14 +201,14 @@ class _SignupState extends State<Signup> {
                         return null;
                       },
                       controller: passwordController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         hintText: 'Write a strong password',
                         prefixIcon: Icon(Icons.password),
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(height: 15),
-                    Row(
+                    const CustomSizedBox(height: 15),
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
@@ -220,7 +221,7 @@ class _SignupState extends State<Signup> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 40),
+                    const CustomSizedBox(height: 40),
                     GestureDetector(
                       onTap:
                           () => {
@@ -236,10 +237,10 @@ class _SignupState extends State<Signup> {
                             registration(), // Call the registration function
                           },
                       child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
-                          gradient: LinearGradient(
+                          gradient: const LinearGradient(
                             colors: [
                               Color(0xFFB91635),
                               Color(0xFF621d3c),
@@ -250,7 +251,7 @@ class _SignupState extends State<Signup> {
                           ),
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        child: Center(
+                        child: const Center(
                           child: Text(
                             'Sign Up',
                             style: TextStyle(
@@ -262,7 +263,7 @@ class _SignupState extends State<Signup> {
                         ),
                       ),
                     ),
-                    SizedBox(height: 5),
+                    const CustomSizedBox(height: 5),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
@@ -270,10 +271,12 @@ class _SignupState extends State<Signup> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Login()),
+                              MaterialPageRoute(
+                                builder: (context) => const Login(),
+                              ),
                             );
                           },
-                          child: Text(
+                          child: const Text(
                             'Already have an account? \nSign In',
                             textAlign: TextAlign.end,
                             style: TextStyle(

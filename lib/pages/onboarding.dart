@@ -1,3 +1,4 @@
+import 'package:barber_booking_app/widgets/reusable_widgets.dart';
 import 'package:flutter/material.dart';
 
 class Onboarding extends StatefulWidget {
@@ -11,20 +12,20 @@ class _OnboardingState extends State<Onboarding> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF2b1615),
+      backgroundColor: const Color(0xFF2b1615),
       body: Container(
-        margin: EdgeInsets.only(top: 130),
+        margin: const EdgeInsets.only(top: 130),
         child: Column(
           children: [
             Image.asset("images/loginPageImg.png"),
-            SizedBox(height: 80),
+            const CustomSizedBox(height: 80),
             Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
               decoration: BoxDecoration(
-                color: Color(0xFFdf711a),
+                color: const Color(0xFFdf711a),
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: Text(
+              child: const Text(
                 'Appoint for a hairtcut',
                 style: TextStyle(
                   color: Colors.white,

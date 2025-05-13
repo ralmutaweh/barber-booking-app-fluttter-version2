@@ -1,4 +1,5 @@
 import 'package:barber_booking_app/services/database.dart';
+import 'package:barber_booking_app/widgets/reusable_widgets.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         SnackBar(
           content: Text(
             'Password reset email sent to $email',
-            style: TextStyle(fontSize: 20),
+            style: const TextStyle(fontSize: 20),
           ),
           backgroundColor: Colors.green,
         ),
@@ -31,7 +32,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             content: Text(
               'Not user was found for the email provided',
               style: TextStyle(fontSize: 20),
@@ -48,12 +49,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
-        margin: EdgeInsets.symmetric(vertical: 200),
+        margin: const EdgeInsets.symmetric(vertical: 200),
         child: Column(
           children: [
-            SizedBox(height: 60),
+            const CustomSizedBox(height: 60),
             Container(
-              child: Text(
+              child: const Text(
                 'Password Recovery',
                 style: TextStyle(
                   fontSize: 30,
@@ -62,8 +63,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const CustomSizedBox(height: 20),
+            const Text(
               'Enter your email:',
               style: TextStyle(
                 fontSize: 20,
@@ -71,12 +72,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
+            const CustomSizedBox(height: 20),
             Form(
               key: _formKey,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                padding: EdgeInsets.only(left: 10),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.only(left: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white70, width: 2),
                   borderRadius: BorderRadius.circular(30),
@@ -89,8 +90,8 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     }
                     return null;
                   },
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'John.Doe@mail.com',
                     hintStyle: TextStyle(fontSize: 18, color: Colors.white),
@@ -103,11 +104,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const CustomSizedBox(height: 20),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Color(0xFFdf711a),
+                color: const Color(0xFFdf711a),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: GestureDetector(
@@ -119,7 +120,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     ResetPassword();
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Send Email',
                   style: TextStyle(
                     color: Colors.white,

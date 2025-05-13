@@ -1,5 +1,6 @@
 import 'package:barber_booking_app/pages/booking.dart';
 import 'package:barber_booking_app/services/shared_prefrerences.dart';
+import 'package:barber_booking_app/widgets/reusable_widgets.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -33,9 +34,9 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF2b1615),
+      backgroundColor: const Color(0xFF2b1615),
       body: Container(
-        margin: EdgeInsets.only(
+        margin: const EdgeInsets.only(
           top: 50,
           // left: MediaQuery.of(context).size.width * 0.05,
           left: 20,
@@ -50,7 +51,7 @@ class _HomeState extends State<Home> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Hello,',
                       style: TextStyle(
                         color: Colors.white,
@@ -60,7 +61,7 @@ class _HomeState extends State<Home> {
                     ),
                     Text(
                       name!,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
@@ -73,10 +74,10 @@ class _HomeState extends State<Home> {
                 //   child: Image.asset("", height: , width: , fit: BoxtFit.cover, )),
               ],
             ),
-            SizedBox(height: 10),
-            Divider(color: Colors.white38),
-            SizedBox(height: 10),
-            Center(
+            const CustomSizedBox(height: 10),
+            const Divider(color: Colors.white38),
+            const CustomSizedBox(height: 10),
+            const Center(
               child: Text(
                 'Services',
                 style: TextStyle(
@@ -86,7 +87,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const CustomSizedBox(height: 20),
             Flexible(
               flex: 1,
               child: ListView(
@@ -108,7 +109,7 @@ class _HomeState extends State<Home> {
                         child: Container(
                           height: 230,
                           decoration: BoxDecoration(
-                            color: Color(0xFFe29452),
+                            color: const Color(0xFFe29452),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
@@ -119,7 +120,7 @@ class _HomeState extends State<Home> {
                                 width: 300,
                                 fit: BoxFit.cover,
                               ),
-                              Text(
+                              const Text(
                                 'Hair Trimming',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -131,7 +132,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const CustomSizedBox(height: 20),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -146,7 +147,7 @@ class _HomeState extends State<Home> {
                         child: Container(
                           height: 230,
                           decoration: BoxDecoration(
-                            color: Color(0xFFe29452),
+                            color: const Color(0xFFe29452),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
@@ -157,7 +158,7 @@ class _HomeState extends State<Home> {
                                 width: 300,
                                 fit: BoxFit.cover,
                               ),
-                              Text(
+                              const Text(
                                 'Beard Trimming',
                                 style: TextStyle(
                                   color: Colors.white,
@@ -169,7 +170,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 20),
+                      const CustomSizedBox(height: 20),
                       GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -184,7 +185,7 @@ class _HomeState extends State<Home> {
                         child: Container(
                           height: 230,
                           decoration: BoxDecoration(
-                            color: Color(0xFFe29452),
+                            color: const Color(0xFFe29452),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Column(
@@ -195,7 +196,7 @@ class _HomeState extends State<Home> {
                                 width: 300,
                                 fit: BoxFit.cover,
                               ),
-                              Text(
+                              const Text(
                                 'Spa & Massage',
                                 style: TextStyle(
                                   color: Colors.white,
