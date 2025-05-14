@@ -10,13 +10,14 @@ class BookingAdmin extends StatefulWidget {
 }
 
 class _BookingAdminState extends State<BookingAdmin> {
-  Stream? BookingStream;
+  Stream? bookingStream;
 
   getOnTheLoad() async {
-    BookingStream = await DatabaseMethods().getBookings();
+    bookingStream = await DatabaseMethods().getBookings();
     setState(() {});
   }
 
+  @override
   initState() {
     super.initState();
     getOnTheLoad();
@@ -24,7 +25,7 @@ class _BookingAdminState extends State<BookingAdmin> {
 
   Widget allBookings() {
     return StreamBuilder(
-      stream: BookingStream,
+      stream: bookingStream,
       builder: (context, AsyncSnapshot snapshot) {
         return snapshot
                 .hasData // Check if the collection has data
@@ -41,9 +42,9 @@ class _BookingAdminState extends State<BookingAdmin> {
                   borderRadius: BorderRadius.circular(20.0),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         colors: [
                           Color(0xFFB91635),
                           Color(0xFF621d3c),
@@ -58,51 +59,51 @@ class _BookingAdminState extends State<BookingAdmin> {
                       children: [
                         Text(
                           'Service: ${docShot['Service']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           'Name: ${docShot['Username']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           'Date: ${docShot['Date']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           'Time: ${docShot['Time']}',
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 20,
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
-                            color: Color(0xFFdf711a),
+                            color: const Color(0xFFdf711a),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: GestureDetector(
                             onTap: () async {
-                              DatabaseMethods().RemoveUserBooking(docShot.id);
+                              DatabaseMethods().removeUserBooking(docShot.id);
                             },
-                            child: Text(
+                            child: const Text(
                               'Done',
                               style: TextStyle(
                                 color: Colors.white,
@@ -127,10 +128,10 @@ class _BookingAdminState extends State<BookingAdmin> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        margin: EdgeInsets.only(top: 60, left: 20, right: 20, bottom: 20),
+        margin: const EdgeInsets.only(top: 60, left: 20, right: 20, bottom: 20),
         child: Column(
           children: [
-            Center(
+            const Center(
               child: Text(
                 'Bookings',
                 style: TextStyle(
@@ -140,7 +141,7 @@ class _BookingAdminState extends State<BookingAdmin> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(child: allBookings()),
           ],
         ),

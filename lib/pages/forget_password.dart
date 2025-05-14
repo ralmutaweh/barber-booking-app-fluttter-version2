@@ -1,8 +1,6 @@
-import 'package:barber_booking_app/Utility/CustomerSnackBar.dart';
-import 'package:barber_booking_app/services/database.dart';
 import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:barber_booking_app/Utility/reset_password.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -16,28 +14,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   TextEditingController emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
-  ResetPassword() async {
-    // Function to reset password
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email!);
-      ScaffoldMessenger.of(context).showSnackBar(
-        CustomSnackBar.create(
-          text: 'Password reset email sent to $email',
-          isError: false,
-        ),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          CustomSnackBar.create(
-            text: 'No user found for the email provided.',
-            isError: true,
-          ),
-        );
-      }
-    }
-  }
+  ResetPassword rs = ResetPassword();
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +25,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
         child: Column(
           children: [
             const CustomSizedBox(height: 60),
-            Container(
-              child: const Text(
-                'Password Recovery',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+            const Text(
+              'Password Recovery',
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             ),
             const CustomSizedBox(height: 20),
@@ -80,7 +55,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 child: TextFormField(
                   controller: emailController,
                   validator: (value) {
-                    if (value!.isEmpty || value == null) {
+                    if (value!.isEmpty) {
                       return 'Please enter your email';
                     }
                     return null;
@@ -112,7 +87,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     setState(() {
                       email = emailController.text;
                     });
-                    ResetPassword();
+                    rs.resetPassword(context, email!);
                   }
                 },
                 child: const Text(

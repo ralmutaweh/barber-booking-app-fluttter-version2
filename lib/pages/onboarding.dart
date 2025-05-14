@@ -17,7 +17,7 @@ class _OnboardingState extends State<Onboarding> {
         margin: const EdgeInsets.only(top: 130),
         child: Column(
           children: [
-            Image.asset("images/loginPageImg.png"),
+            Image.asset('images/loginPageImg.png'),
             const CustomSizedBox(height: 80),
             Container(
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),

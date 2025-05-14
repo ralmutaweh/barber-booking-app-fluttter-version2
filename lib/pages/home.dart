@@ -26,7 +26,6 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    // TODO: implement initState
     getOnTheLoad();
     super.initState();
   }
@@ -102,7 +101,7 @@ class _HomeState extends State<Home> {
                             MaterialPageRoute(
                               builder:
                                   (context) =>
-                                      Booking(service: 'Hair Trimming'),
+                                      const Booking(service: 'Hair Trimming'),
                             ),
                           );
                         },
@@ -115,7 +114,7 @@ class _HomeState extends State<Home> {
                           child: Column(
                             children: [
                               Image.asset(
-                                "images/hair_trimming_service.png",
+                                'images/hair_trimming_service.png',
                                 height: 200,
                                 width: 300,
                                 fit: BoxFit.cover,
@@ -140,7 +139,7 @@ class _HomeState extends State<Home> {
                             MaterialPageRoute(
                               builder:
                                   (context) =>
-                                      Booking(service: 'Beard Trimming'),
+                                      const Booking(service: 'Beard Trimming'),
                             ),
                           );
                         },
@@ -153,7 +152,7 @@ class _HomeState extends State<Home> {
                           child: Column(
                             children: [
                               Image.asset(
-                                "images/beard_trimming_service.png",
+                                'images/beard_trimming_service.png',
                                 height: 200,
                                 width: 300,
                                 fit: BoxFit.cover,
@@ -178,7 +177,7 @@ class _HomeState extends State<Home> {
                             MaterialPageRoute(
                               builder:
                                   (context) =>
-                                      Booking(service: 'Spa & Massage'),
+                                      const Booking(service: 'Spa & Massage'),
                             ),
                           );
                         },
@@ -191,7 +190,7 @@ class _HomeState extends State<Home> {
                           child: Column(
                             children: [
                               Image.asset(
-                                "images/hair_trimming_service.png",
+                                'images/hair_trimming_service.png',
                                 height: 200,
                                 width: 300,
                                 fit: BoxFit.cover,

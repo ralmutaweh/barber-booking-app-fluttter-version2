@@ -1,13 +1,13 @@
-import 'package:barber_booking_app/Utility/CustomerSnackBar.dart';
+import 'package:barber_booking_app/widgets/CustomeSnackBar.dart';
 import 'package:barber_booking_app/services/database.dart';
 import 'package:barber_booking_app/services/shared_prefrerences.dart';
 import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:flutter/material.dart';
 
 class Booking extends StatefulWidget {
-  String service;
+  final String service;
 
-  Booking({super.key, required this.service});
+  const Booking({super.key, required this.service});
 
   @override
   State<Booking> createState() => _BookingState();
@@ -23,14 +23,12 @@ class _BookingState extends State<Booking> {
   }
 
   getOnTheLoad() async {
-    // When loading the application (init state)
     await getDataFromSharedPreferences();
     setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     getOnTheLoad();
     super.initState();
   }
@@ -42,7 +40,7 @@ class _BookingState extends State<Booking> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _selectedDate,
-      firstDate: DateTime(_selectedDate.day),
+      firstDate: DateTime.now(),
       lastDate: DateTime(
         _selectedDate.year,
         _selectedDate.month + 1,
@@ -100,7 +98,7 @@ class _BookingState extends State<Booking> {
               ),
             ),
             const CustomSizedBox(height: 20),
-            Container(
+            SizedBox(
               width: MediaQuery.of(context).size.width,
               child: Image.asset('images/discount.png', fit: BoxFit.cover),
             ),
@@ -212,23 +210,29 @@ class _BookingState extends State<Booking> {
               child: GestureDetector(
                 onTap: () async {
                   Map<String, dynamic> userBookingMap = {
-                    "Service": widget.service,
-                    "Date":
+                    'Service': widget.service,
+                    'Date':
                         '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
-                    "Time": _selectedTime.format(context).toString(),
-                    "Username": name,
-                    "Email": email,
+                    'Time': _selectedTime.format(context).toString(),
+                    'Username': name,
+                    'Email': email,
                   };
-                  await DatabaseMethods().addUserBooking(userBookingMap).then((
-                    value,
-                  ) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      CustomSnackBar.create(
-                        text: 'Service Booked Successfully',
-                        isError: false,
-                      ),
-                    );
-                  });
+                  await DatabaseMethods()
+                      .addUserBooking(userBookingMap)
+                      .then((value) {
+                        CustomSnackBar.show(
+                          context,
+                          'Service Booked Successfully',
+                          false,
+                        );
+                      })
+                      .catchError((error) {
+                        CustomSnackBar.show(
+                          context,
+                          'Failed to book service. Please try again.',
+                          true,
+                        );
+                      });
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
