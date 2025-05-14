@@ -1,5 +1,6 @@
-import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
+import 'package:barber_booking_app/widgets/CustomText.dart';
 import 'package:flutter/material.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 
 class Onboarding extends StatefulWidget {
   const Onboarding({super.key});
@@ -25,14 +26,7 @@ class _OnboardingState extends State<Onboarding> {
                 color: const Color(0xFFdf711a),
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: const Text(
-                'Appoint for a hairtcut',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: CustomTextWidgets.commonStyling('Appoint for a hairtcut'),
             ),
           ],
         ),

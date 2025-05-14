@@ -1,5 +1,6 @@
 import 'package:barber_booking_app/pages/signup.dart';
 import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
+import 'package:barber_booking_app/widgets/CustomText.dart';
 import 'package:flutter/material.dart';
 import 'package:barber_booking_app/Utility/auth_service.dart';
 
@@ -41,13 +42,8 @@ class _LoginState extends State<Login> {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: const Text(
+            child: CustomTextWidgets.header(
               'Welcome back,\n Sign In to Begin!',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-              ),
             ),
           ),
           Container(
@@ -74,14 +70,7 @@ class _LoginState extends State<Login> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Email:',
-                    style: TextStyle(
-                      color: Color(0xFFB91635),
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  CustomTextWidgets.formText('email'),
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -96,14 +85,7 @@ class _LoginState extends State<Login> {
                     ),
                   ),
                   const CustomSizedBox(height: 20),
-                  const Text(
-                    'Password:',
-                    style: TextStyle(
-                      color: Color(0xFFB91635),
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  CustomTextWidgets.formText('Password'),
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -119,17 +101,10 @@ class _LoginState extends State<Login> {
                     obscureText: true,
                   ),
                   const CustomSizedBox(height: 15),
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Forget Password',
-                        style: TextStyle(
-                          color: Color(0xFF621d3c),
-                          fontSize: 15.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      CustomTextWidgets.commonStyling2('Forget Password?'),
                     ],
                   ),
                   const CustomSizedBox(height: 40),
@@ -162,15 +137,8 @@ class _LoginState extends State<Login> {
                         ),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: const Center(
-                        child: Text(
-                          'Sign In',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 26.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                      child: Center(
+                        child: CustomTextWidgets.buttonText('Sign In'),
                       ),
                     ),
                   ),
@@ -187,14 +155,8 @@ class _LoginState extends State<Login> {
                             ),
                           );
                         },
-                        child: const Text(
+                        child: CustomTextWidgets.commonStyling2(
                           'Don\'t have an account? \nSign Up',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(
-                            color: Color(0xFF621d3c),
-                            fontSize: 15.0,
-                            fontWeight: FontWeight.w500,
-                          ),
                         ),
                       ),
                     ],

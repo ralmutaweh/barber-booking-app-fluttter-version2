@@ -1,4 +1,5 @@
 import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
+import 'package:barber_booking_app/widgets/CustomText.dart';
 import 'package:flutter/material.dart';
 import 'package:barber_booking_app/Utility/auth_service.dart';
 
@@ -13,14 +14,13 @@ class _AdminLoginState extends State<AdminLogin> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   final AuthService authService = AuthService();
-  final _formkey = GlobalKey<FormState>(); //Form key to validate the form
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF2b1615),
       body: Stack(
-        //Stack widget to overflow
         children: [
           Container(
             padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
@@ -37,14 +37,7 @@ class _AdminLoginState extends State<AdminLogin> {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: const Text(
-              'Admin\n Panel',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30.0,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+            child: CustomTextWidgets.header('Admin \nLogin'),
           ),
           Container(
             padding: const EdgeInsets.only(
@@ -66,18 +59,11 @@ class _AdminLoginState extends State<AdminLogin> {
               ),
             ),
             child: Form(
-              key: _formkey, //Form key to validate the form (Error Handling)
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'Username:',
-                    style: TextStyle(
-                      color: Color(0xFFB91635),
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  CustomTextWidgets.formText('Username:'),
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -92,14 +78,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     ),
                   ),
                   const CustomSizedBox(height: 20),
-                  const Text(
-                    'Password:',
-                    style: TextStyle(
-                      color: Color(0xFFB91635),
-                      fontSize: 25.0,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
+                  CustomTextWidgets.formText('Password:'),
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -116,14 +95,15 @@ class _AdminLoginState extends State<AdminLogin> {
                   ),
                   const CustomSizedBox(height: 30),
                   GestureDetector(
-                    onTap:
-                        () => {
-                          authService.loginAdmin(
-                            context,
-                            userNameController.text,
-                            passwordController.text,
-                          ),
-                        },
+                    onTap: () {
+                      if (_formKey.currentState?.validate() == true) {
+                        authService.loginAdmin(
+                          context,
+                          userNameController.text,
+                          passwordController.text,
+                        );
+                      }
+                    },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       width: MediaQuery.of(context).size.width,
@@ -139,16 +119,7 @@ class _AdminLoginState extends State<AdminLogin> {
                         ),
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: const Center(
-                        child: Text(
-                          'LOG IN',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 26.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
+                      child: Center(child: CustomTextWidgets.formText('Login')),
                     ),
                   ),
                 ],
