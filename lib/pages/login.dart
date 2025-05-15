@@ -1,3 +1,4 @@
+import 'package:barber_booking_app/pages/forget_password.dart';
 import 'package:barber_booking_app/pages/signup.dart';
 import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:barber_booking_app/widgets/CustomText.dart';
@@ -17,20 +18,26 @@ class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       body: Stack(
-        //Stack widget to overflow
         children: [
           Container(
-            padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-            height: MediaQuery.of(context).size.height / 2,
-            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(
+              top: 50,
+              left: screenWidth * 0.05,
+              right: screenWidth * 0.05,
+            ),
+            height: screenHeight / 2,
+            width: screenWidth,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -47,17 +54,11 @@ class _LoginState extends State<Login> {
             ),
           ),
           Container(
-            padding: const EdgeInsets.only(
-              top: 40,
-              right: 30,
-              left: 30,
-              bottom: 40,
+            padding: EdgeInsets.symmetric(
+              vertical: 40,
+              horizontal: screenWidth * 0.05,
             ),
-            margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height / 4.5,
-            ),
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(top: screenHeight / 4.5),
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -66,11 +67,11 @@ class _LoginState extends State<Login> {
               ),
             ),
             child: Form(
-              key: _formkey,
+              key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomTextWidgets.formText('email'),
+                  CustomTextWidgets.formText('Email'),
                   TextFormField(
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -104,13 +105,24 @@ class _LoginState extends State<Login> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      CustomTextWidgets.commonStyling2('Forget Password?'),
+                      GestureDetector(
+                        onTap:
+                            () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ForgetPassword(),
+                              ),
+                            ),
+                        child: CustomTextWidgets.commonStyling2(
+                          'Forget Password?',
+                        ),
+                      ),
                     ],
                   ),
                   const CustomSizedBox(height: 40),
                   GestureDetector(
                     onTap: () {
-                      if (_formkey.currentState!.validate()) {
+                      if (_formKey.currentState!.validate()) {
                         setState(() {
                           userEmail = emailController.text;
                           userPassword = passwordController.text;
@@ -124,7 +136,7 @@ class _LoginState extends State<Login> {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      width: MediaQuery.of(context).size.width,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
                           colors: [

@@ -18,10 +18,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
-        margin: const EdgeInsets.symmetric(vertical: 200),
+        margin: EdgeInsets.symmetric(vertical: screenHeight * 0.2),
         child: Column(
           children: [
             const CustomSizedBox(height: 60),
@@ -46,7 +48,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             Form(
               key: _formKey,
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 20),
+                margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
                 padding: const EdgeInsets.only(left: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white70, width: 2),

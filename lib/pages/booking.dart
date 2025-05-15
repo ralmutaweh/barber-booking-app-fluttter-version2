@@ -69,10 +69,12 @@ class _BookingState extends State<Booking> {
 
   @override
   Widget build(BuildContext context) {
+    var screenHeight = MediaQuery.of(context).size.height;
+    var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: const Color(0xFF2b1615),
       body: Container(
-        margin: const EdgeInsets.only(left: 20, right: 20),
+        margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -80,9 +82,9 @@ class _BookingState extends State<Booking> {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: const Padding(
-                padding: EdgeInsets.only(top: 60),
-                child: Icon(
+              child: Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.06),
+                child: const Icon(
                   Icons.arrow_back_ios_new_rounded,
                   color: Colors.white,
                   size: 30,
@@ -116,7 +118,7 @@ class _BookingState extends State<Booking> {
             ),
             const CustomSizedBox(height: 15),
             Container(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: const Color(0xFFb4817e),
@@ -162,7 +164,7 @@ class _BookingState extends State<Booking> {
             ),
             const CustomSizedBox(height: 20),
             Container(
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
+              padding: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
                 color: const Color(0xFFb4817e),
@@ -220,9 +222,9 @@ class _BookingState extends State<Booking> {
                   );
                 },
                 child: Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: 20,
+                  padding: EdgeInsets.symmetric(
+                    vertical: screenHeight * 0.02,
+                    horizontal: screenWidth * 0.2,
                   ),
                   decoration: BoxDecoration(
                     color: const Color(0xFFdf711a),

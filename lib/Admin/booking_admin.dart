@@ -20,15 +20,24 @@ class _BookingAdminState extends State<BookingAdmin> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: const Color(0xFF2b1615),
       body: Container(
-        margin: const EdgeInsets.only(top: 60, left: 20, right: 20, bottom: 20),
+        margin: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.05,
+          vertical: 20,
+        ),
         child: Column(
           children: [
             Center(child: CustomTextWidgets.header('Bookings')),
             const SizedBox(height: 20),
-            Expanded(child: BookingData().allBookings(context)),
+            Expanded(
+              child: BookingData().allBookings(
+                context,
+              ), // Ensure this returns a Widget
+            ),
           ],
         ),
       ),

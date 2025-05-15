@@ -18,14 +18,17 @@ class _AdminLoginState extends State<AdminLogin> {
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: const Color(0xFF2b1615),
       body: Stack(
         children: [
           Container(
             padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
-            height: MediaQuery.of(context).size.height / 2,
-            width: MediaQuery.of(context).size.width,
+            height: screenHeight / 2,
+            width: screenWidth,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -40,17 +43,11 @@ class _AdminLoginState extends State<AdminLogin> {
             child: CustomTextWidgets.header('Admin \nLogin'),
           ),
           Container(
-            padding: const EdgeInsets.only(
-              top: 40,
-              right: 30,
-              left: 30,
-              bottom: 40,
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.1,
+              vertical: 40,
             ),
-            margin: EdgeInsets.only(
-              top: MediaQuery.of(context).size.height / 4.5,
-            ),
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            margin: EdgeInsets.only(top: screenHeight / 4.5),
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
@@ -106,7 +103,7 @@ class _AdminLoginState extends State<AdminLogin> {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 10),
-                      width: MediaQuery.of(context).size.width,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: const LinearGradient(
                           colors: [
