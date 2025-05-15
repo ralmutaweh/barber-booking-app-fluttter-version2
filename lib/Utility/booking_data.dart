@@ -68,7 +68,10 @@ class BookingData {
                       ),
                       child: GestureDetector(
                         onTap: () async {
-                          await DatabaseMethods().removeUserBooking(docShot.id);
+                          await DatabaseMethods().removeUserBooking(
+                            context,
+                            docShot.id,
+                          );
                           // Optionally, you could show a Snackbar here to confirm deletion
                         },
                         child: CustomTextWidgets.buttonText('Done'),

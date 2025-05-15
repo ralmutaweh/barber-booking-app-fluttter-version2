@@ -1,5 +1,4 @@
-import 'package:barber_booking_app/widgets/CustomeSnackBar.dart';
-import 'package:barber_booking_app/services/database.dart';
+import 'package:barber_booking_app/Models/user_creds.dart';
 import 'package:barber_booking_app/services/shared_prefrerences.dart';
 import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,8 @@ class Booking extends StatefulWidget {
 
 class _BookingState extends State<Booking> {
   String? name, email;
+
+  BookingService bookingService = BookingService();
 
   getDataFromSharedPreferences() async {
     name = await SharedPrefrerencesHelper().getUserName();
@@ -209,30 +210,14 @@ class _BookingState extends State<Booking> {
             Center(
               child: GestureDetector(
                 onTap: () async {
-                  Map<String, dynamic> userBookingMap = {
-                    'Service': widget.service,
-                    'Date':
-                        '${_selectedDate.day}/${_selectedDate.month}/${_selectedDate.year}',
-                    'Time': _selectedTime.format(context).toString(),
-                    'Username': name,
-                    'Email': email,
-                  };
-                  await DatabaseMethods()
-                      .addUserBooking(userBookingMap)
-                      .then((value) {
-                        CustomSnackBar.show(
-                          context,
-                          'Service Booked Successfully',
-                          false,
-                        );
-                      })
-                      .catchError((error) {
-                        CustomSnackBar.show(
-                          context,
-                          'Failed to book service. Please try again.',
-                          true,
-                        );
-                      });
+                  await bookingService.addUserToDatabase(
+                    context,
+                    widget.service,
+                    _selectedDate,
+                    _selectedTime,
+                    name!,
+                    email!,
+                  );
                 },
                 child: Container(
                   padding: const EdgeInsets.symmetric(

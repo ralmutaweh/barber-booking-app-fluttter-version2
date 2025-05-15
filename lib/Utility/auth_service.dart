@@ -102,7 +102,7 @@ class AuthService {
           'Email': email,
           'Id': id,
         };
-        await DatabaseMethods().addUserDetails(userDataMap, id);
+        await DatabaseMethods().addUserDetails(context, userDataMap, id);
 
         CustomSnackBar.show(context, 'Registration Successful', false);
 
