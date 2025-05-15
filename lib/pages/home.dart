@@ -19,7 +19,6 @@ class _HomeState extends State<Home> {
   }
 
   getOnTheLoad() async {
-    // When loading the application (init state)
     await getDataFromSharedPreferences();
     setState(() {});
   }
@@ -34,6 +33,13 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     var screenWidth = MediaQuery.of(context).size.width;
     var screenHeight = MediaQuery.of(context).size.height;
+
+    List<Map<String, String>> services = [
+      {'name': 'Hair Trimming', 'image': 'images/hair_trimming_service.png'},
+      {'name': 'Beard Trimming', 'image': 'images/beard_trimming_service.png'},
+      {'name': 'Spa & Massage', 'image': 'images/loginPageImg.png'},
+    ];
+
     return Scaffold(
       backgroundColor: const Color(0xFF2b1615),
       body: Container(
@@ -59,7 +65,7 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Text(
-                      name!,
+                      name ?? 'User', // Default value if name is null
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24.0,
@@ -84,132 +90,50 @@ class _HomeState extends State<Home> {
               ),
             ),
             const CustomSizedBox(height: 20),
-            Flexible(
-              flex: 1,
-              child: Expanded(
-                child: ListView(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        const Booking(service: 'Hair Trimming'),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            height: 230,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFe29452),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'images/hair_trimming_service.png',
-                                  height: 200,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
-                                const Text(
-                                  'Hair Trimming',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
+            Expanded(
+              child: ListView.builder(
+                itemCount: services.length,
+                itemBuilder: (context, index) {
+                  final service = services[index];
+                  return GestureDetector(
+                    key: ValueKey(service['name']),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => Booking(service: service['name']!),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      height: 230,
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFe29452),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            service['image']!,
+                            height: 200,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                          Text(
+                            service['name']!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                        ),
-                        const CustomSizedBox(height: 20),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) => const Booking(
-                                      service: 'Beard Trimming',
-                                    ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            height: 230,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFe29452),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'images/beard_trimming_service.png',
-                                  height: 200,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
-                                const Text(
-                                  'Beard Trimming',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const CustomSizedBox(height: 20),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder:
-                                    (context) =>
-                                        const Booking(service: 'Spa & Massage'),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            height: 230,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFe29452),
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              children: [
-                                Image.asset(
-                                  'images/hair_trimming_service.png',
-                                  height: 200,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
-                                const Text(
-                                  'Spa & Massage',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  );
+                },
               ),
             ),
           ],

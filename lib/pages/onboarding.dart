@@ -19,36 +19,48 @@ class _OnboardingState extends State<Onboarding> {
     return Scaffold(
       backgroundColor: const Color(0xFF2b1615),
       body: Center(
-        // Center the content vertically
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // Center items in column
-          children: [
-            Image.asset(
-              'images/loginPageImg.png',
-              width: screenWidth * 0.8,
-              height: screenHeight * 0.4,
-              fit: BoxFit.cover,
-            ),
-            const CustomSizedBox(height: 80),
-            GestureDetector(
-              onTap:
-                  () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Signup()),
-                  ),
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: screenHeight * 0.025,
-                  horizontal: screenWidth * 0.05,
-                ),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFdf711a),
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                child: CustomTextWidgets.commonStyling('Appoint for a haircut'),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.05,
+          ), // Padding for better layout
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'images/loginPageImg.png',
+                width: screenWidth * 0.8,
+                height: screenHeight * 0.4,
+                fit: BoxFit.cover,
               ),
-            ),
-          ],
+              const CustomSizedBox(height: 20),
+              CustomTextWidgets.header('Welcome to Barber App!'),
+              const CustomSizedBox(height: 10),
+              CustomTextWidgets.commonStyling(
+                'Your perfect haircut is just a tap away. Let’s get started!',
+              ),
+              const CustomSizedBox(height: 40),
+              GestureDetector(
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Signup()),
+                    ),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    vertical: screenHeight * 0.025,
+                    horizontal: screenWidth * 0.1,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFdf711a),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: CustomTextWidgets.commonStyling(
+                    'Appoint for a haircut',
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

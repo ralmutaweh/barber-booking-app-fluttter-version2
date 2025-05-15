@@ -19,6 +19,10 @@ class BookingData {
           return const Center(child: CircularProgressIndicator());
         }
 
+        if (snapshot.hasError) {
+          return const Center(child: Text('Error loading bookings.'));
+        }
+
         if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
           return const Center(child: Text('No bookings available.'));
         }
@@ -47,6 +51,7 @@ class BookingData {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomTextWidgets.commonStyling(
                       'Service: ${docShot['Service']}',
@@ -72,7 +77,7 @@ class BookingData {
                             context,
                             docShot.id,
                           );
-                          // Optionally, you could show a Snackbar here to confirm deletion
+                          // Optionally, show a Snackbar here to confirm deletion
                         },
                         child: CustomTextWidgets.buttonText('Done'),
                       ),
