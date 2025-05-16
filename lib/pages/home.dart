@@ -74,6 +74,14 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
             const CustomSizedBox(height: 10),

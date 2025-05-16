@@ -35,7 +35,6 @@ class _SignupState extends State<Signup> {
                 right: screenWidth * 0.05,
               ),
               height: MediaQuery.of(context).size.height / 2,
-              width: MediaQuery.of(context).size.width,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -47,8 +46,21 @@ class _SignupState extends State<Signup> {
                   end: Alignment.bottomRight,
                 ),
               ),
-              child: CustomTextWidgets.header(
-                'Welcome,\n Create your account!',
+              child: Column(
+                children: [
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(
+                        Icons.arrow_back_ios_new_outlined,
+                        size: 30,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  CustomTextWidgets.header('Welcome,\n Create your account!'),
+                ],
               ),
             ),
             Container(
@@ -141,24 +153,21 @@ class _SignupState extends State<Signup> {
                     ),
                     const CustomSizedBox(height: 40),
                     GestureDetector(
-                      onTap:
-                          () => {
-                            if (_formkey.currentState!.validate())
-                              {
-                                setState(() {
-                                  // To store the values in the variables
-                                  username = nameController.text;
-                                  email = emailController.text;
-                                  password = passwordController.text;
-                                }),
-                              },
-                            authService.registration(
-                              context,
-                              username!,
-                              email!,
-                              password!,
-                            ),
-                          },
+                      onTap: () {
+                        if (_formkey.currentState!.validate()) {
+                          setState(() {
+                            username = nameController.text;
+                            email = emailController.text;
+                            password = passwordController.text;
+                          });
+                          authService.registration(
+                            context,
+                            username!,
+                            email!,
+                            password!,
+                          );
+                        }
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(vertical: 10),
                         width: MediaQuery.of(context).size.width,

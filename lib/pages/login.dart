@@ -37,7 +37,6 @@ class _LoginState extends State<Login> {
               right: screenWidth * 0.05,
             ),
             height: screenHeight / 2,
-            width: screenWidth,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -49,8 +48,22 @@ class _LoginState extends State<Login> {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: CustomTextWidgets.header(
-              'Welcome back,\n Sign In to Begin!',
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                CustomTextWidgets.header('Welcome back,\n Sign In to Begin!'),
+              ],
             ),
           ),
           Container(

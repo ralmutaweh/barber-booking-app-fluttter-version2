@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 class BookingData {
   Stream<QuerySnapshot>? bookingStream;
 
-  Future<void> initialiseBookingStream() async {
-    bookingStream = await DatabaseMethods().getBookings();
+  void initialiseBookingStream() {
+    bookingStream = DatabaseMethods().getBookings();
   }
 
   Widget allBookings(BuildContext context) {
@@ -32,57 +32,64 @@ class BookingData {
           itemCount: snapshot.data!.docs.length,
           itemBuilder: (context, index) {
             DocumentSnapshot docShot = snapshot.data!.docs[index];
-            return Material(
-              elevation: 10.0,
-              borderRadius: BorderRadius.circular(20.0),
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [
-                      Color(0xFFB91635),
-                      Color(0xFF621d3c),
-                      Color(0xFF311937),
-                    ],
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Material(
+                elevation: 10.0,
+                borderRadius: BorderRadius.circular(20.0),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFFB91635),
+                        Color(0xFF621d3c),
+                        Color(0xFF311937),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20.0),
                   ),
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomTextWidgets.commonStyling(
-                      'Service: ${docShot['Service']}',
-                    ),
-                    const CustomSizedBox(height: 10),
-                    CustomTextWidgets.commonStyling(
-                      'Username: ${docShot['Username']}',
-                    ),
-                    const CustomSizedBox(height: 10),
-                    CustomTextWidgets.commonStyling('Date: ${docShot['Date']}'),
-                    const CustomSizedBox(height: 10),
-                    CustomTextWidgets.commonStyling('Time: ${docShot['Time']}'),
-                    const CustomSizedBox(height: 10),
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFdf711a),
-                        borderRadius: BorderRadius.circular(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomTextWidgets.commonStyling(
+                        'Service: ${docShot['Service']}',
                       ),
-                      child: GestureDetector(
-                        onTap: () async {
-                          await DatabaseMethods().removeUserBooking(
-                            context,
-                            docShot.id,
-                          );
-                          // Optionally, show a Snackbar here to confirm deletion
-                        },
-                        child: CustomTextWidgets.buttonText('Done'),
+                      const CustomSizedBox(height: 10),
+                      CustomTextWidgets.commonStyling(
+                        'Username: ${docShot['Username']}',
                       ),
-                    ),
-                  ],
+                      const CustomSizedBox(height: 10),
+                      CustomTextWidgets.commonStyling(
+                        'Date: ${docShot['Date']}',
+                      ),
+                      const CustomSizedBox(height: 10),
+                      CustomTextWidgets.commonStyling(
+                        'Time: ${docShot['Time']}',
+                      ),
+                      const CustomSizedBox(height: 10),
+                      Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFdf711a),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: GestureDetector(
+                          onTap: () async {
+                            await DatabaseMethods().removeUserBooking(
+                              context,
+                              docShot.id,
+                            );
+                          },
+                          child: CustomTextWidgets.buttonText('Done'),
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
                 ),
               ),
             );

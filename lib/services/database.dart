@@ -42,11 +42,7 @@ class DatabaseMethods {
     }
   }
 
-  Future<Stream<QuerySnapshot<Map<String, dynamic>>>> getBookings() async {
-    try {
-      return FirebaseFirestore.instance.collection('Booking').snapshots();
-    } catch (e) {
-      throw Exception('Failed to fetch bookings: $e');
-    }
+  Stream<QuerySnapshot> getBookings() {
+    return FirebaseFirestore.instance.collection('Booking').snapshots();
   }
 }

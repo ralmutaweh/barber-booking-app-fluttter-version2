@@ -40,7 +40,21 @@ class _AdminLoginState extends State<AdminLogin> {
                 end: Alignment.bottomRight,
               ),
             ),
-            child: CustomTextWidgets.header('Admin \nLogin'),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextWidgets.header('Admin \nLogin'),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
           ),
           Container(
             padding: EdgeInsets.symmetric(

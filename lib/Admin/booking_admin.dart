@@ -31,13 +31,26 @@ class _BookingAdminState extends State<BookingAdmin> {
         ),
         child: Column(
           children: [
-            Center(child: CustomTextWidgets.header('Bookings')),
-            const SizedBox(height: 20),
-            Expanded(
-              child: BookingData().allBookings(
-                context,
-              ), // Ensure this returns a Widget
+            const SizedBox(height: 50),
+            Center(
+              child: Row(
+                children: [
+                  CustomTextWidgets.header('Bookings'),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
             ),
+            const SizedBox(height: 20),
+            Expanded(child: bookingData.allBookings(context)),
+            const SizedBox(height: 20),
           ],
         ),
       ),

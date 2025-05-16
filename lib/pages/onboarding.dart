@@ -1,3 +1,4 @@
+import 'package:barber_booking_app/Admin/admin_login.dart';
 import 'package:barber_booking_app/pages/signup.dart';
 import 'package:barber_booking_app/widgets/CustomText.dart';
 import 'package:flutter/material.dart';
@@ -20,9 +21,7 @@ class _OnboardingState extends State<Onboarding> {
       backgroundColor: const Color(0xFF2b1615),
       body: Center(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.05,
-          ), // Padding for better layout
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -57,6 +56,21 @@ class _OnboardingState extends State<Onboarding> {
                   child: CustomTextWidgets.commonStyling(
                     'Appoint for a haircut',
                   ),
+                ),
+              ),
+              const SizedBox(height: 20), // Added spacing between buttons
+              GestureDetector(
+                onTap:
+                    () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AdminLogin(),
+                      ),
+                    ),
+                child: const Icon(
+                  Icons.admin_panel_settings,
+                  size: 30,
+                  color: Colors.white,
                 ),
               ),
             ],
