@@ -1,9 +1,9 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefrerencesHelper {
-  static String userIdKey = "USERKEY";
-  static String userNameKey = "USERNAMEKEY";
-  static String userEmailKey = "USEREMAILKEY";
+  static String userIdKey = 'USERKEY';
+  static String userNameKey = 'USERNAMEKEY';
+  static String userEmailKey = 'USEREMAILKEY';
 
   // Getters
   Future<bool> saveUserId(String userId) async {

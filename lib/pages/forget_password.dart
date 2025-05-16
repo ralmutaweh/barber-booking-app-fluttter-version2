@@ -1,6 +1,6 @@
-import 'package:barber_booking_app/services/database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:flutter/material.dart';
+import 'package:barber_booking_app/Utility/reset_password.dart';
 
 class ForgetPassword extends StatefulWidget {
   const ForgetPassword({super.key});
@@ -14,56 +14,29 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   TextEditingController emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
-  ResetPassword() async {
-    // Function to reset password
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email!);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'Password reset email sent to $email',
-            style: TextStyle(fontSize: 20),
-          ),
-          backgroundColor: Colors.green,
-        ),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Not user was found for the email provided',
-              style: TextStyle(fontSize: 20),
-            ),
-            backgroundColor: Colors.green,
-          ),
-        );
-      }
-    }
-  }
+  ResetPassword rs = ResetPassword();
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: Colors.black,
       body: Container(
-        margin: EdgeInsets.symmetric(vertical: 200),
+        margin: EdgeInsets.symmetric(vertical: screenHeight * 0.2),
         child: Column(
           children: [
-            SizedBox(height: 60),
-            Container(
-              child: Text(
-                'Password Recovery',
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+            const CustomSizedBox(height: 60),
+            const Text(
+              'Password Recovery',
+              style: TextStyle(
+                fontSize: 30,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
-            Text(
+            const CustomSizedBox(height: 20),
+            const Text(
               'Enter your email:',
               style: TextStyle(
                 fontSize: 20,
@@ -71,12 +44,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(height: 20),
+            const CustomSizedBox(height: 20),
             Form(
               key: _formKey,
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                padding: EdgeInsets.only(left: 10),
+                margin: EdgeInsets.symmetric(horizontal: screenWidth * 0.1),
+                padding: const EdgeInsets.only(left: 10),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white70, width: 2),
                   borderRadius: BorderRadius.circular(30),
@@ -84,13 +57,13 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 child: TextFormField(
                   controller: emailController,
                   validator: (value) {
-                    if (value!.isEmpty || value == null) {
+                    if (value!.isEmpty) {
                       return 'Please enter your email';
                     }
                     return null;
                   },
-                  style: TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'John.Doe@mail.com',
                     hintStyle: TextStyle(fontSize: 18, color: Colors.white),
@@ -103,11 +76,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const CustomSizedBox(height: 20),
             Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
-                color: Color(0xFFdf711a),
+                color: const Color(0xFFdf711a),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: GestureDetector(
@@ -116,10 +89,10 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     setState(() {
                       email = emailController.text;
                     });
-                    ResetPassword();
+                    rs.resetPassword(context, email!);
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Send Email',
                   style: TextStyle(
                     color: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:barber_booking_app/pages/booking.dart';
 import 'package:barber_booking_app/services/shared_prefrerences.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -18,28 +19,33 @@ class _HomeState extends State<Home> {
   }
 
   getOnTheLoad() async {
-    // When loading the application (init state)
     await getDataFromSharedPreferences();
     setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     getOnTheLoad();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+
+    List<Map<String, String>> services = [
+      {'name': 'Hair Trimming', 'image': 'images/hair_trimming_service.png'},
+      {'name': 'Beard Trimming', 'image': 'images/beard_trimming_service.png'},
+      {'name': 'Spa & Massage', 'image': 'images/loginPageImg.png'},
+    ];
+
     return Scaffold(
-      backgroundColor: Color(0xFF2b1615),
+      backgroundColor: const Color(0xFF2b1615),
       body: Container(
-        margin: EdgeInsets.only(
-          top: 50,
-          // left: MediaQuery.of(context).size.width * 0.05,
-          left: 20,
-          right: 20,
+        margin: EdgeInsets.symmetric(
+          vertical: screenHeight * 0.05,
+          horizontal: screenWidth * 0.05,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +56,7 @@ class _HomeState extends State<Home> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Hello,',
                       style: TextStyle(
                         color: Colors.white,
@@ -59,8 +65,8 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     Text(
-                      name!,
-                      style: TextStyle(
+                      name ?? 'User', // Default value if name is null
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
@@ -68,15 +74,20 @@ class _HomeState extends State<Home> {
                     ),
                   ],
                 ),
-                // ClipRRect(
-                //   borderRadius: BorderRadius.circular(20),
-                //   child: Image.asset("", height: , width: , fit: BoxtFit.cover, )),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             ),
-            SizedBox(height: 10),
-            Divider(color: Colors.white38),
-            SizedBox(height: 10),
-            Center(
+            const CustomSizedBox(height: 10),
+            const Divider(color: Colors.white38),
+            const CustomSizedBox(height: 10),
+            const Center(
               child: Text(
                 'Services',
                 style: TextStyle(
@@ -86,130 +97,51 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
-            Flexible(
-              flex: 1,
-              child: ListView(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) =>
-                                      Booking(service: 'Hair Trimming'),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          height: 230,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFe29452),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                "images/hair_trimming_service.png",
-                                height: 200,
-                                width: 300,
-                                fit: BoxFit.cover,
-                              ),
-                              Text(
-                                'Hair Trimming',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+            const CustomSizedBox(height: 20),
+            Expanded(
+              child: ListView.builder(
+                itemCount: services.length,
+                itemBuilder: (context, index) {
+                  final service = services[index];
+                  return GestureDetector(
+                    key: ValueKey(service['name']),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder:
+                              (context) => Booking(service: service['name']!),
                         ),
+                      );
+                    },
+                    child: Container(
+                      height: 230,
+                      margin: const EdgeInsets.only(bottom: 20),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFe29452),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      SizedBox(height: 20),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) =>
-                                      Booking(service: 'Beard Trimming'),
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            service['image']!,
+                            height: 200,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                          Text(
+                            service['name']!,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
                             ),
-                          );
-                        },
-                        child: Container(
-                          height: 230,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFe29452),
-                            borderRadius: BorderRadius.circular(20),
                           ),
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                "images/beard_trimming_service.png",
-                                height: 200,
-                                width: 300,
-                                fit: BoxFit.cover,
-                              ),
-                              Text(
-                                'Beard Trimming',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        ],
                       ),
-                      SizedBox(height: 20),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) =>
-                                      Booking(service: 'Spa & Massage'),
-                            ),
-                          );
-                        },
-                        child: Container(
-                          height: 230,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFe29452),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                "images/hair_trimming_service.png",
-                                height: 200,
-                                width: 300,
-                                fit: BoxFit.cover,
-                              ),
-                              Text(
-                                'Spa & Massage',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                    ),
+                  );
+                },
               ),
             ),
           ],

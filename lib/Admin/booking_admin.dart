@@ -1,6 +1,6 @@
-import 'package:barber_booking_app/services/database.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:barber_booking_app/widgets/CustomText.dart';
+import 'package:barber_booking_app/Utility/booking_data.dart';
 
 class BookingAdmin extends StatefulWidget {
   const BookingAdmin({super.key});
@@ -10,138 +10,47 @@ class BookingAdmin extends StatefulWidget {
 }
 
 class _BookingAdminState extends State<BookingAdmin> {
-  Stream? BookingStream;
+  final BookingData bookingData = BookingData();
 
-  getOnTheLoad() async {
-    BookingStream = await DatabaseMethods().getBookings();
-    setState(() {});
-  }
-
-  initState() {
+  @override
+  void initState() {
     super.initState();
-    getOnTheLoad();
-  }
-
-  Widget allBookings() {
-    return StreamBuilder(
-      stream: BookingStream,
-      builder: (context, AsyncSnapshot snapshot) {
-        return snapshot
-                .hasData // Check if the collection has data
-            ? ListView.builder(
-              padding: EdgeInsets.zero,
-              itemCount:
-                  snapshot.data.docs.length, // Get the length of the collection
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                DocumentSnapshot docShot = snapshot.data.docs[index];
-                return Material(
-                  elevation: 10.0,
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    padding: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xFFB91635),
-                          Color(0xFF621d3c),
-                          Color(0xFF311937),
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          'Service: ${docShot['Service']}',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Name: ${docShot['Username']}',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Date: ${docShot['Date']}',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Time: ${docShot['Time']}',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: Color(0xFFdf711a),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: GestureDetector(
-                            onTap: () async {
-                              DatabaseMethods().RemoveUserBooking(docShot.id);
-                            },
-                            child: Text(
-                              'Done',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            )
-            : Container();
-      },
-    );
+    bookingData.initialiseBookingStream();
   }
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
+      backgroundColor: const Color(0xFF2b1615),
       body: Container(
-        margin: EdgeInsets.only(top: 60, left: 20, right: 20, bottom: 20),
+        margin: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.05,
+          vertical: 20,
+        ),
         child: Column(
           children: [
+            const SizedBox(height: 50),
             Center(
-              child: Text(
-                'Bookings',
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
+              child: Row(
+                children: [
+                  CustomTextWidgets.header('Bookings'),
+                  const Spacer(),
+                  GestureDetector(
+                    onTap: () => Navigator.pop(context),
+                    child: const Icon(
+                      Icons.arrow_back_ios_new_outlined,
+                      size: 30,
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
-            SizedBox(height: 20),
-            Expanded(child: allBookings()),
+            const SizedBox(height: 20),
+            Expanded(child: bookingData.allBookings(context)),
+            const SizedBox(height: 20),
           ],
         ),
       ),

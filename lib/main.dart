@@ -1,13 +1,5 @@
-import 'package:barber_booking_app/Admin/admin_login.dart';
-import 'package:barber_booking_app/Admin/booking_admin.dart';
-import 'package:barber_booking_app/pages/booking.dart';
-import 'package:barber_booking_app/pages/forget_password.dart';
-import 'package:barber_booking_app/pages/home.dart';
-import 'package:barber_booking_app/pages/login.dart';
-import 'package:barber_booking_app/pages/onboarding.dart';
-import 'package:barber_booking_app/pages/signup.dart';
 import 'package:flutter/material.dart';
-
+import 'package:barber_booking_app/pages/onboarding.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -29,7 +21,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: Signup(),
+      home: const Onboarding(),
     );
   }
 }

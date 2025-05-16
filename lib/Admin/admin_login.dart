@@ -1,7 +1,7 @@
-import 'package:barber_booking_app/Admin/booking_admin.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:barber_booking_app/widgets/CustomSizedBox.dart';
+import 'package:barber_booking_app/widgets/CustomText.dart';
 import 'package:flutter/material.dart';
+import 'package:barber_booking_app/Utility/auth_service.dart';
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -13,177 +13,131 @@ class AdminLogin extends StatefulWidget {
 class _AdminLoginState extends State<AdminLogin> {
   TextEditingController userNameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  final _formkey = GlobalKey<FormState>(); //Form key to validate the form
-
-  LoginAdmin() {
-    FirebaseFirestore.instance.collection("Admin").get().then((snapshot) {
-      snapshot.docs.forEach((result) {
-        if (result.data()['id'] != userNameController.text.trim()) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Your username is not correct. Please try again',
-                style: TextStyle(fontSize: 20),
-              ),
-              backgroundColor: Colors.red,
-            ),
-          );
-        } else if (result.data()['password'] != passwordController.text) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                'Your password is not correct. Please try again',
-                style: TextStyle(fontSize: 20),
-              ),
-              backgroundColor: Colors.red,
-            ),
-          );
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => BookingAdmin()),
-          );
-        }
-      });
-    });
-  }
+  final AuthService authService = AuthService();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    var screenWidth = MediaQuery.of(context).size.width;
+    var screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      backgroundColor: Color(0xFF2b1615),
-      body: Container(
-        child: Stack(
-          //Stack widget to overflow
-          children: [
-            Container(
-              padding: EdgeInsets.only(top: 50, left: 20, right: 20),
-              height: MediaQuery.of(context).size.height / 2,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color(0xFFB91635),
-                    Color(0xFF621d3c),
-                    Color(0xFF311937),
-                  ],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-              ),
-              child: Text(
-                'Admin\n Panel',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                ),
+      backgroundColor: const Color(0xFF2b1615),
+      body: Stack(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 50, left: 20, right: 20),
+            height: screenHeight / 2,
+            width: screenWidth,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFFB91635),
+                  Color(0xFF621d3c),
+                  Color(0xFF311937),
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
               ),
             ),
-            Container(
-              padding: EdgeInsets.only(
-                top: 40,
-                right: 30,
-                left: 30,
-                bottom: 40,
-              ),
-              margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height / 4.5,
-              ),
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTextWidgets.header('Admin \nLogin'),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(
+                    Icons.arrow_back_ios_new_outlined,
+                    size: 30,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-              child: Form(
-                key: _formkey, //Form key to validate the form (Error Handling)
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Username:',
-                      style: TextStyle(
-                        color: Color(0xFFB91635),
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your username';
-                        }
-                        return null;
-                      },
-                      controller: userNameController,
-                      decoration: InputDecoration(
-                        hintText: 'Write your username',
-                        prefixIcon: Icon(Icons.mail_outlined),
-                      ),
-                    ),
-                    SizedBox(height: 20),
-                    Text(
-                      'Password:',
-                      style: TextStyle(
-                        color: Color(0xFFB91635),
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your password';
-                        }
-                        return null;
-                      },
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        hintText: 'Write a strong password',
-                        prefixIcon: Icon(Icons.password),
-                      ),
-                      obscureText: true,
-                    ),
-                    SizedBox(height: 30),
-                    GestureDetector(
-                      onTap: () => {LoginAdmin()},
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        width: MediaQuery.of(context).size.width,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFFB91635),
-                              Color(0xFF621d3c),
-                              Color(0xFF311937),
-                            ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'LOG IN',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 26.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.1,
+              vertical: 40,
+            ),
+            margin: EdgeInsets.only(top: screenHeight / 4.5),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
               ),
             ),
-          ],
-        ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomTextWidgets.formText('Username:'),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your username';
+                      }
+                      return null;
+                    },
+                    controller: userNameController,
+                    decoration: const InputDecoration(
+                      hintText: 'Write your username',
+                      prefixIcon: Icon(Icons.mail_outlined),
+                    ),
+                  ),
+                  const CustomSizedBox(height: 20),
+                  CustomTextWidgets.formText('Password:'),
+                  TextFormField(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      return null;
+                    },
+                    controller: passwordController,
+                    decoration: const InputDecoration(
+                      hintText: 'Write a strong password',
+                      prefixIcon: Icon(Icons.password),
+                    ),
+                    obscureText: true,
+                  ),
+                  const CustomSizedBox(height: 30),
+                  GestureDetector(
+                    onTap: () {
+                      if (_formKey.currentState?.validate() == true) {
+                        authService.loginAdmin(
+                          context,
+                          userNameController.text,
+                          passwordController.text,
+                        );
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [
+                            Color(0xFFB91635),
+                            Color(0xFF621d3c),
+                            Color(0xFF311937),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: Center(child: CustomTextWidgets.formText('Login')),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
